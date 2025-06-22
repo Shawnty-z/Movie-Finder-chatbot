@@ -199,3 +199,18 @@ async function sendMessage() {
         showLoading(false);
     }
 }
+
+// Focus on input when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    messageInput.focus();
+});
+
+// Disable send button when input is empty
+messageInput.addEventListener('input', function() {
+    sendButton.disabled = !this.value.trim();
+    if (sendButton.disabled) {
+        sendButton.classList.add('opacity-50', 'cursor-not-allowed');
+    } else {
+        sendButton.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+}); 
