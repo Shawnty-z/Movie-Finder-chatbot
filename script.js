@@ -31,3 +31,10 @@ const genreMapping = {
     'war': 10752,
     'western': 37
 };
+
+// Handle Enter key press
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
