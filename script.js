@@ -86,3 +86,21 @@ function showLoading(show = true) {
     }
 }
 
+// Get genre ID from user input
+function getGenreId(userInput) {
+    const input = userInput.toLowerCase().trim();
+    
+    // Direct mapping
+    if (genreMapping[input]) {
+        return genreMapping[input];
+    }
+    
+    // Check if input contains any genre keywords
+    for (const [genre, id] of Object.entries(genreMapping)) {
+        if (input.includes(genre)) {
+            return id;
+        }
+    }
+    
+    return null;
+}
