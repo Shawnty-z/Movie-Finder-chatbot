@@ -104,3 +104,41 @@ function getGenreId(userInput) {
     
     return null;
 }
+
+// Fetch movie recommendation from TMDB API
+async function fetchMovieRecommendation(genreId) {
+    try {
+        // Get a random page to add variety
+        const randomPage = Math.floor(Math.random() * 5) + 1;
+        
+        const response = await fetch(
+            `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&page=${randomPage}&language=en-US`
+        );
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.results && data.results.length > 0) {
+            // Get a random movie from the results
+            const randomIndex = Math.floor(Math.random() * Math.min(data.results.length, 10));
+            const movie = data.results[randomIndex];
+            
+            return {
+                title: movie.title,
+                overview: movie.overview,
+                releaseDate: movie.release_date,
+                rating: movie.vote_average,
+                posterPath: movie.poster_path
+            };
+        } else {
+            throw new Error('No movies found for this genre');
+        }
+    } catch (error) {
+        console.error('Error fetching movie:', error);
+        throw error;
+    }
+}
+
