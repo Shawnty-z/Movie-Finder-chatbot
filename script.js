@@ -158,3 +158,44 @@ function generateMovieResponse(movie) {
     return response;
 }
 
+// Main function to send message and get response
+async function sendMessage() {
+    const message = messageInput.value.trim();
+    
+    if (!message) {
+        return;
+    }
+    
+    // Add user message to chat
+    addMessage(message, true);
+    
+    // Clear input
+    messageInput.value = '';
+    
+    // Show loading indicator
+    showLoading(true);
+    
+    try {
+        // Get genre ID from user input
+        const genreId = getGenreId(message);
+        
+        if (!genreId) {
+            addMessage("I'm not sure I recognize that genre. Try something like 'Comedy', 'Sci-Fi', 'Thriller', 'Romance', 'Action', 'Horror', 'Drama', or 'Adventure'!");
+            return;
+        }
+        
+        // Fetch movie recommendation
+        const movie = await fetchMovieRecommendation(genreId);
+        
+        // Generate and add response
+        const response = generateMovieResponse(movie);
+        addMessage(response);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        addMessage("Sorry, I'm having trouble finding movies right now. Please try again later or check your internet connection.");
+    } finally {
+        // Hide loading indicator
+        showLoading(false);
+    }
+}
