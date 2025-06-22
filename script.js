@@ -38,3 +38,41 @@ function handleKeyPress(event) {
         sendMessage();
     }
 }
+
+// Add a message to the chat
+function addMessage(message, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'flex place-items-start space-x-3';
+    
+    if (isUser) {
+        messageDiv.innerHTML = `
+            <div class="flex-1"></div>
+            <div class="flex-1">
+                <div class="bg-primary text-white rounded-lg p-3 max-w-xs lg:max-w-md ml-auto">
+                    <p>${message}</p>
+                </div>
+            </div>
+            <div class="flex-shrink-0">
+                <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
+                    <span class="text-sm">👤</span>
+                </div>
+            </div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="flex-shrink-0">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <span class="text-sm">🤖</span>
+                </div>
+            </div>
+            <div class="flex-1">
+                <div class="bg-gray-100 rounded-lg p-3 max-w-xs lg:max-w-md">
+                    <p class="text-gray-800">${message}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
