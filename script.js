@@ -142,3 +142,19 @@ async function fetchMovieRecommendation(genreId) {
     }
 }
 
+// Generate movie recommendation response
+function generateMovieResponse(movie) {
+    const year = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : 'Unknown';
+    const rating = movie.rating ? `⭐ ${movie.rating}/10` : '';
+    
+    let response = `🎬 <strong>${movie.title}</strong> (${year}) ${rating}\n\n`;
+    
+    if (movie.overview) {
+        response += movie.overview;
+    } else {
+        response += "A great movie in this genre! Unfortunately, I don't have a description available.";
+    }
+    
+    return response;
+}
+
