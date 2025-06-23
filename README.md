@@ -26,7 +26,7 @@ A single-page chatbot that recommends movies based on user-specified genres usin
 
 1. Open `script.js` in your code editor
 2. Find the line: `const TMDB_API_KEY = '...';`
-3. Replace `'...'` with your actual API key
+3. Replace `'...'` with your actual API key (or you can use my API key)
 4. Save the file
 
 ### 3. Run the Application
