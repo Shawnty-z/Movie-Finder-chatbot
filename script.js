@@ -40,7 +40,7 @@ function handleKeyPress(event) {
 }
 
 // Add a message to the chat
-function addMessage(message, isUser = false) {
+function addMessage(message, isUser = false, movieData = null) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'flex place-items-start space-x-3';
     
@@ -59,18 +59,41 @@ function addMessage(message, isUser = false) {
             </div>
         `;
     } else {
-        messageDiv.innerHTML = `
-            <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                    <span class="text-sm">🤖</span>
+        // Check if this is a movie recommendation with poster
+        if (movieData && movieData.posterPath) {
+            const posterUrl = `https://image.tmdb.org/t/p/w200${movieData.posterPath}`;
+            messageDiv.innerHTML = `
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-primary rounded-full flex place-items-center justify-center">
+                        <span class="text-sm">🤖</span>
+                    </div>
                 </div>
-            </div>
-            <div class="flex-1">
-                <div class="bg-gray-100 rounded-lg p-3 max-w-xs lg:max-w-md">
-                    <p class="text-gray-800">${message}</p>
+                <div class="flex-1">
+                    <div class="bg-gray-100 rounded-lg p-4 max-w-xs lg:max-w-md">
+                        <div class="flex space-x-3">
+                            <img src="${posterUrl}" alt="${movieData.title}" class="w-16 h-24 object-cover rounded-lg shadow-sm" onerror="this.style.display='none'">
+                            <div class="flex-1">
+                                <p class="text-gray-800">${message}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+        } else {
+            // Regular text message (no poster)
+            messageDiv.innerHTML = `
+                <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-primary rounded-full flex place-items-center justify-center">
+                        <span class="text-sm">🤖</span>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="bg-gray-100 rounded-lg p-3 max-w-xs lg:max-w-md">
+                        <p class="text-gray-800">${message}</p>
+                    </div>
+                </div>
+            `;
+        }
     }
     
     chatMessages.appendChild(messageDiv);
@@ -189,7 +212,7 @@ async function sendMessage() {
         
         // Generate and add response
         const response = generateMovieResponse(movie);
-        addMessage(response);
+        addMessage(response, false, movie);
         
     } catch (error) {
         console.error('Error:', error);
