@@ -7,9 +7,11 @@ A single-page chatbot that recommends movies based on user-specified genres usin
 - **Clean Chat Interface**: Modern, responsive design using Tailwind CSS
 - **Genre Recognition**: Supports various movie genres (Comedy, Sci-Fi, Thriller, Romance, etc.)
 - **Real-time API Integration**: Fetches movie recommendations from TMDB API
+- **Movie Posters**: Displays movie poster images for recommendations
 - **Loading Indicators**: Shows "AI is thinking..." while fetching recommendations
 - **Responsive Design**: Works on desktop and mobile devices
 - **User-friendly**: Simple input field with Enter key support
+- **Basic Unit Testing**: Core logic is automatically tested in the browser
 
 ## Setup Instructions
 
@@ -26,7 +28,7 @@ A single-page chatbot that recommends movies based on user-specified genres usin
 
 1. Open `script.js` in your code editor
 2. Find the line: `const TMDB_API_KEY = '...';`
-3. Replace `'...'` with your actual API key (or you can use my API key)
+3. Replace `'...'` with your actual API key (Or you can use my API)
 4. Save the file
 
 ### 3. Run the Application
@@ -62,7 +64,7 @@ The chatbot recognizes the following genres:
 2. **Genre Processing**: The app maps the user input to TMDB genre IDs
 3. **API Call**: Makes a request to TMDB API to discover movies in that genre
 4. **Random Selection**: Picks a random popular movie from the results
-5. **Response**: Displays the movie title, year, rating, and description
+5. **Response**: Displays the movie title, year, rating, poster, and description
 
 ## Technical Details
 
@@ -77,6 +79,7 @@ The chatbot recognizes the following genres:
 Movie Finder chatbot/
 ├── index.html          # Main HTML file with chat interface
 ├── script.js           # JavaScript functionality and API integration
+├── simple-tests.js     # Simple browser-based unit tests
 └── README.md           # This file
 ```
 
@@ -84,6 +87,20 @@ Movie Finder chatbot/
 
 - `GET /discover/movie` - Discover movies by genre
 - Parameters: `with_genres`, `sort_by=popularity.desc`, `page`, `language=en-US`
+
+## Testing
+
+### Simple Unit Tests (Browser-Based)
+
+- **File:** `simple-tests.js`
+- **How to Run:**
+  - Open `index.html` in your browser
+  - Open the browser console (F12 or right-click → Inspect → Console tab)
+  - The tests run automatically and results are shown in the console
+- **What is Tested:**
+  - `getGenreId`: Ensures correct genre ID is returned for various user inputs
+  - `generateMovieResponse`: Ensures movie response is generated correctly, including edge cases (missing data)
+- **Type:** Unit tests (test individual functions in isolation)
 
 ## Troubleshooting
 
